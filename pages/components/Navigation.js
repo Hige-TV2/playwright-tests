@@ -1,6 +1,5 @@
 class Navigation {
   constructor(page) {
-    // Header navigation
     this.logo = page
       .getByLabel("Global top")
       .getByRole("link", { name: "Forsiden af tv2.dk" });
@@ -13,39 +12,14 @@ class Navigation {
       .getByRole("link", { name: "TV 2 Play" });
     this.loginButton = page.getByRole("button", { name: "Log ind" });
     this.menuButton = page.getByRole("button", { name: "Menu" });
-
-    // Sidebar menu
-    this.closeMenuButton = page.getByRole("button", { name: "Luk menu" });
-    this.searchBox = page.getByRole("searchbox", { name: "Søg på tv2.dk" });
-    this.sectionHeader = page.getByRole("heading", { name: "Sektioner" });
-    this.sectionNyheder = page
-      .getByRole("group", { name: "Nyheder sektion" })
-      .locator("summary");
-    this.sectionSport = page
-      .getByRole("group", { name: "Sport sektion" })
-      .locator("summary");
-    this.shortcutsHeader = page.getByRole("heading", {
-      name: "Genveje",
-      exact: true,
-    });
-    this.shortcutKandidattest = page.getByRole("link", {
-      name: "Tag kandidattesten",
-    });
-    this.shortcutSportsresultater = page.getByRole("link", {
-      name: "Sportsresultater",
-    });
   }
 
-  async openMenu() {
+  async openSidebar() {
     await this.menuButton.click();
   }
 
-  async closeMenu() {
-    await this.closeMenuButton.click();
-  }
-
-  async expandSection(sectionLocator) {
-    await sectionLocator.click();
+  async openLoginMenu() {
+    await this.loginButton.click();
   }
 }
 

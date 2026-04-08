@@ -1,4 +1,7 @@
 const { Navigation } = require("./components/Navigation");
+const { Sidebar } = require("./components/Sidebar");
+const { Footer } = require("./components/Footer");
+const { LoginMenu } = require("./components/LoginMenu");
 
 class FrontPage {
   constructor(page) {
@@ -6,24 +9,9 @@ class FrontPage {
     this.url = "https://tv2.dk";
 
     this.navigation = new Navigation(page);
-
-    // Footer
-    this.footerServicesHeading = page.getByRole("heading", {
-      name: "Services",
-    });
-    this.footerPlay = page
-      .getByRole("contentinfo")
-      .getByRole("link", { name: "TV 2 Play" });
-    this.footerEtikHeading = page.getByRole("heading", { name: "Etik på TV" });
-    this.footerEtikLink = page.getByRole("link", {
-      name: "Etiske retningslinjer",
-    });
-    this.footerOmHeading = page.getByRole("heading", { name: "Om TV" });
-    this.footerOmLink = page.getByRole("link", { name: "Information om TV" });
-    this.footerKontaktHeading = page.getByRole("heading", {
-      name: "Kontakt TV",
-    });
-    this.footerKontaktLink = page.getByRole("link", { name: "Kontakt TV" });
+    this.sidebar = new Sidebar(page);
+    this.footer = new Footer(page);
+    this.loginMenu = new LoginMenu(page);
   }
 
   async navigate() {

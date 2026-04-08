@@ -7,8 +7,11 @@ const test = base.extend({
     await frontPage.navigate();
 
     const cookieButton = page.getByRole("button", { name: "Acceptér alle" });
-    if (await cookieButton.isVisible()) {
+    try {
+      await cookieButton.waitFor({ state: "visible", timeout: 5000 });
       await cookieButton.click();
+    } catch {
+      // Cookie popup did not appear, continue
     }
 
     await use(frontPage);
