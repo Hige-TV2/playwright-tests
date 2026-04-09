@@ -17,6 +17,7 @@ class Footer {
     this.etikFejl = page.getByRole("link", { name: "Fejl og rettelser" });
     this.etikPrivatliv = page.getByRole("link", {
       name: "TV 2 Privatlivspolitik",
+      exact: true,
     });
     this.etikCookies = page.getByRole("button", {
       name: "Cookie-indstillinger",
