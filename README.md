@@ -79,9 +79,11 @@ The test configuration is defined in `playwright.config.js`. This file includes:
 ## Project Structure
 
 - `tests/` - Test specification files (`.spec.js`)
-- `pages/` - Page Object Model classes for reusable page components
-- `utils/` - Utility functions and helpers
-- `data/` - Test data files
+- `pages/` - Page Object Model classes and page components
+- `pages/components/` - Reusable UI elements (Navbar, Modals, etc.) used across pages
+- `utils/` - Pure helper functions independent of Playwright (date formatting, API wrappers, auth tokens)
+- `data/` - Test data files (JSON/CSV): environment URLs, credentials, static test strings
+- `fixtures/` - Playwright test fixtures with setup logic (page object injection, cookie handling)
 - `playwright.config.js` - Playwright configuration
 - `package.json` - Project dependencies and scripts
 
