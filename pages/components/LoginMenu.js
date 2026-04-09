@@ -13,14 +13,16 @@ class LoginMenu {
     this.themeNote = page.getByText('Med "Auto" skiftes der');
 
     // Regional selector
-    this.regionSelector = page.getByText("NyhedsregionTV 2 Kosmopol", {
-      exact: true,
-    });
-    this.regionDropdown = page
-      .getByLabel("Nyhedsregion")
-      .locator("div")
-      .filter({ hasText: "Vælg nyhedsregionTV 2" });
-    this.regionOptions = page.getByLabel("Nyhedsregion").locator("label");
+    this.regionAccordion = page.locator('details[aria-label="Nyhedsregion"]');
+    this.regionSummary = page.locator(
+      'details[aria-label="Nyhedsregion"] summary',
+    );
+    this.regionSubtext = page.locator(
+      'details[aria-label="Nyhedsregion"] small',
+    );
+    this.regionOptions = page.locator(
+      'details[aria-label="Nyhedsregion"] input[type="radio"]',
+    );
 
     // Shortcuts
     this.shortcutsHeader = page.getByRole("heading", { name: "Genveje" });
@@ -49,23 +51,24 @@ class LoginMenu {
   }
 
   async openRegionDropdown() {
-    await this.regionSelector.click();
+    await this.regionSummary.click();
   }
 
   async getRegionOptions() {
-    return this.regionOptions.allTextContents();
+    const labels = this.page.locator(
+      'details[aria-label="Nyhedsregion"] label',
+    );
+    return labels.allTextContents();
   }
 
-  async selectRegion(regionName) {
-    const option = this.page
-      .getByLabel("Nyhedsregion")
-      .locator('input[type="radio"]')
-      .filter({ has: this.page.locator("label", { hasText: regionName }) });
-    await option.check({ force: true });
+  async selectRegion(regionValue) {
+    await this.page
+      .locator(`input[id="region-${regionValue}"]`)
+      .check({ force: true });
   }
 
   async getSelectedRegion() {
-    return this.regionSelector.textContent();
+    return this.regionSubtext.textContent();
   }
 }
 

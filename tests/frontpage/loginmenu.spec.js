@@ -36,9 +36,9 @@ test.describe("Login Menu", () => {
     });
   });
 
-  test.describe("Regional selector", () => {
+  test.describe("Region selector", () => {
     test("Region selector is visible", async ({ frontPage }) => {
-      await expect(frontPage.loginMenu.regionSelector).toBeVisible();
+      await expect(frontPage.loginMenu.regionSummary).toBeVisible();
     });
 
     test("Region dropdown expands and shows options", async ({ frontPage }) => {
@@ -49,17 +49,14 @@ test.describe("Login Menu", () => {
 
     //Playwright doesn't play nice with the region selector, will investigate later
 
-    //     test("Selecting a region updates the selector", async ({ frontPage }) => {
-    //       const initialText = await frontPage.loginMenu.getSelectedRegion();
-    //       await frontPage.loginMenu.openRegionDropdown();
-    //       const options = await frontPage.loginMenu.getRegionOptions();
-    //       const different = options.find((o) => !initialText.includes(o));
-    //       if (different) {
-    //         await frontPage.loginMenu.selectRegion(different);
-    //         const updated = await frontPage.loginMenu.getSelectedRegion();
-    //         expect(updated).toContain(different);
-    //       }
-    //     });
+    test("Selecting a region updates the selector", async ({ frontPage }) => {
+      const initialRegion = await frontPage.loginMenu.getSelectedRegion();
+      await frontPage.loginMenu.openRegionDropdown();
+      await frontPage.loginMenu.selectRegion("TV2FYN");
+      const updated = await frontPage.loginMenu.getSelectedRegion();
+      expect(updated).not.toBe(initialRegion);
+      expect(updated).toContain("TV 2 Fyn");
+    });
   });
 
   test.describe("Shortcuts", () => {
