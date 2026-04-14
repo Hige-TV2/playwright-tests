@@ -71,7 +71,7 @@ class Sidebar {
       .getByLabel("Livsstil sektion")
       .getByRole("link", { name: "Korte videoer" });
     this.livsstilMad = page.getByRole("link", { name: "Mad", exact: true });
-    this.livsstilBolig = page.getByRole("link", { name: "Bolig" });
+    this.livsstilBolig = page.getByRole("link", { name: "Bolig", exact: true });
 
     // Underholdning
     this.sectionUnderholdning = page

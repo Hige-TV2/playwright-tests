@@ -1,17 +1,13 @@
 const { test, expect } = require("../../fixtures");
+const { verifyFirstArticleTeaser } = require("../../utils/test-helpers");
 
 test.describe("Frontpage content", () => {
   test.describe("Article teasers", () => {
-    test("At least one article teaser is present", async ({ frontPage }) => {
-      await expect(frontPage.content.firstArticle).toBeVisible();
-    });
-
-    test("First article teaser is clickable and navigates away", async ({
+    test("First article teaser is visible and clickable", async ({
       frontPage,
       page,
     }) => {
-      await frontPage.content.firstArticle.click();
-      await expect(page).not.toHaveURL("https://tv2.dk");
+      await verifyFirstArticleTeaser(page, frontPage.content, "Frontpage");
     });
   });
 
