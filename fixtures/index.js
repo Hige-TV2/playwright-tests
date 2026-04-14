@@ -1,6 +1,7 @@
 const { test: base } = require("@playwright/test");
 const { FrontPage } = require("../pages/frontPage");
 const { NyhederPage } = require("../pages/nyhederPage");
+const { SportPage } = require("../pages/sportPage");
 const { expect } = require("@playwright/test");
 
 /**
@@ -34,6 +35,13 @@ const test = base.extend({
     await nyhederPage.navigate();
     await dismissCookieBanner(page);
     await use(nyhederPage);
+  },
+
+  sportPage: async ({ page }, use) => {
+    const sportPage = new SportPage(page);
+    await sportPage.navigate();
+    await dismissCookieBanner(page);
+    await use(sportPage);
   },
 });
 

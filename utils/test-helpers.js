@@ -5,6 +5,24 @@
 const { expect } = require("@playwright/test");
 
 /**
+ * Dismisses the OneTrust consent popup if it appears.
+ * Safe to call on tv2 domains and no-ops when popup is absent.
+ * @param {import('@playwright/test').Page} page
+ */
+async function dismissCookieBanner(page) {
+  const cookieButton = page.getByRole("button", { name: "Acceptér alle" });
+  try {
+    await cookieButton.waitFor({ state: "visible", timeout: 10000 });
+    await cookieButton.click();
+    await page
+      .locator(".onetrust-pc-dark-filter")
+      .waitFor({ state: "hidden", timeout: 5000 });
+  } catch {
+    // Cookie popup did not appear, continue
+  }
+}
+
+/**
  * Verifies that the first article teaser is visible and clickable
  * @param {import('@playwright/test').Page} page - The page object
  * @param {Object} pageObject - The page object containing firstArticle locator
@@ -77,8 +95,59 @@ async function verifyActiveTabState(sectionNav, expectedActiveTab) {
   console.log(`✓ Only "${expectedActiveTab}" tab is marked as active`);
 }
 
+/**
+ * Verifies a list of locators are all visible.
+ * @param {{name: string, locator: import('@playwright/test').Locator}[]} items
+ * @param {string} label
+ */
+async function verifyVisibleItems(items, label = "items") {
+  for (const item of items) {
+    await expect(item.locator).toBeVisible();
+  }
+  console.log(`✓ ${label} are visible`);
+}
+
+/**
+ * Verifies links have non-empty absolute URLs.
+ * @param {import('@playwright/test').Locator} links
+ * @param {number} maxToCheck
+ */
+async function verifyLinkHrefs(links, maxToCheck = 5) {
+  const linkCount = await links.count();
+  for (let i = 0; i < Math.min(linkCount, maxToCheck); i++) {
+    const href = await links.nth(i).getAttribute("href");
+    expect(href).toBeTruthy();
+    expect(href).toMatch(/^https?:\/\//);
+  }
+  console.log(
+    `✓ Checked valid href on ${Math.min(linkCount, maxToCheck)} links`,
+  );
+}
+
+/**
+ * Verifies a page has visible main content and the expected URL.
+ * @param {import('@playwright/test').Page} page
+ * @param {import('@playwright/test').Locator} mainLocator
+ * @param {string|RegExp} expectedUrl
+ * @param {string} pageName
+ */
+async function verifyPageLoad(
+  page,
+  mainLocator,
+  expectedUrl,
+  pageName = "Page",
+) {
+  await expect(mainLocator).toBeVisible();
+  await expect(page).toHaveURL(expectedUrl);
+  console.log(`✓ ${pageName} loads correctly`);
+}
+
 module.exports = {
+  dismissCookieBanner,
   verifyFirstArticleTeaser,
   verifyPageComponents,
   verifyActiveTabState,
+  verifyVisibleItems,
+  verifyLinkHrefs,
+  verifyPageLoad,
 };

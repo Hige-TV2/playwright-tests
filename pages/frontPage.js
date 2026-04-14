@@ -16,8 +16,36 @@ class FrontPage {
     this.content = new Content(page);
   }
 
+  async gotoWithRetry(url, maxAttempts = 2) {
+    let lastError;
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        await this.page.goto(url, {
+          waitUntil: "domcontentloaded",
+          timeout: 45000,
+        });
+        return;
+      } catch (error) {
+        lastError = error;
+        const message = String(error?.message || "");
+        const isRetryable =
+          message.includes("ERR_CONNECTION_TIMED_OUT") ||
+          message.includes("ERR_ABORTED") ||
+          message.includes("Test timeout") ||
+          message.includes("Timeout");
+
+        if (!isRetryable || attempt === maxAttempts) {
+          throw error;
+        }
+      }
+    }
+
+    throw lastError;
+  }
+
   async navigate() {
-    await this.page.goto(this.url);
+    await this.gotoWithRetry(this.url);
   }
 }
 

@@ -77,6 +77,28 @@ npm test -- utils/debug/navigation-debugger.spec.js
 
 ---
 
+### 4. `tests/sport-debug.spec.js`
+
+Dedicated debug spec for Sport section structure analysis.
+
+**Use when:**
+
+- Building or updating tests for `sport.tv2.dk`
+- You need to inspect Sports tabs, schedule cards, live score filters, or tournament links
+- You need robust selectors without crawler-based inspection
+
+**Run:**
+
+```bash
+npx playwright test tests/sport-debug.spec.js --project=chromium --workers=1
+```
+
+**Related guide:**
+
+- `tests/sport/README.md` (repeatable selector discovery workflow)
+
+---
+
 ## Tips for Using
 
 1. **Customize the specs**: These are templates. Modify the selectors, page URLs, and element names to match your page structure.

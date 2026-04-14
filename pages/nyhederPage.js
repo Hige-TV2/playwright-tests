@@ -71,8 +71,36 @@ class NyhederPage {
     this.firstArticle = page.getByRole("article").first();
   }
 
+  async gotoWithRetry(url, maxAttempts = 2) {
+    let lastError;
+
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        await this.page.goto(url, {
+          waitUntil: "domcontentloaded",
+          timeout: 45000,
+        });
+        return;
+      } catch (error) {
+        lastError = error;
+        const message = String(error?.message || "");
+        const isRetryable =
+          message.includes("ERR_CONNECTION_TIMED_OUT") ||
+          message.includes("ERR_ABORTED") ||
+          message.includes("Test timeout") ||
+          message.includes("Timeout");
+
+        if (!isRetryable || attempt === maxAttempts) {
+          throw error;
+        }
+      }
+    }
+
+    throw lastError;
+  }
+
   async navigate(path = "") {
-    await this.page.goto(`${this.url}${path}`);
+    await this.gotoWithRetry(`${this.url}${path}`);
   }
 
   /**
@@ -80,7 +108,7 @@ class NyhederPage {
    * @param {"seneste"|"politik"|"krimi"|"samfund"|"udland"} section
    */
   async navigateTo(section) {
-    await this.page.goto(`${this.url}/${section}`);
+    await this.gotoWithRetry(`${this.url}/${section}`);
   }
 }
 
