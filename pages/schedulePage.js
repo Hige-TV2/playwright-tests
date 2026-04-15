@@ -1,3 +1,5 @@
+const { gotoWithRetry } = require("../utils/page-navigation");
+
 class SchedulePage {
   constructor(page) {
     this.page = page;
@@ -23,10 +25,7 @@ class SchedulePage {
   }
 
   async navigate() {
-    await this.page.goto(this.url, {
-      waitUntil: "domcontentloaded",
-      timeout: 45000,
-    });
+    await gotoWithRetry(this.page, this.url);
   }
 
   /**

@@ -108,6 +108,23 @@ async function verifyVisibleItems(items, label = "items") {
 }
 
 /**
+ * Expands a sidebar section and verifies all expected sub-links are visible.
+ * @param {Object} sidebar
+ * @param {import('@playwright/test').Locator} sectionLocator
+ * @param {{name: string, locator: import('@playwright/test').Locator}[]} subLinks
+ * @param {string} sectionName
+ */
+async function verifyExpandedSidebarSection(
+  sidebar,
+  sectionLocator,
+  subLinks,
+  sectionName,
+) {
+  await sidebar.expandSection(sectionLocator);
+  await verifyVisibleItems(subLinks, `${sectionName} sub-links`);
+}
+
+/**
  * Verifies links have non-empty absolute URLs.
  * @param {import('@playwright/test').Locator} links
  * @param {number} maxToCheck
@@ -148,6 +165,7 @@ module.exports = {
   verifyPageComponents,
   verifyActiveTabState,
   verifyVisibleItems,
+  verifyExpandedSidebarSection,
   verifyLinkHrefs,
   verifyPageLoad,
 };

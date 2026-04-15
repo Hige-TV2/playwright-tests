@@ -1,3 +1,5 @@
+const { gotoWithRetry } = require("../utils/page-navigation");
+
 class TournamentPage {
   constructor(page, url) {
     this.page = page;
@@ -97,10 +99,7 @@ class TournamentPage {
   }
 
   async navigate() {
-    await this.page.goto(this.url, {
-      waitUntil: "domcontentloaded",
-      timeout: 45000,
-    });
+    await gotoWithRetry(this.page, this.url);
   }
 
   /**

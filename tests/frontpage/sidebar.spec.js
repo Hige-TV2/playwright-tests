@@ -1,4 +1,47 @@
 const { test, expect } = require("../../fixtures");
+const { verifyExpandedSidebarSection } = require("../../utils/test-helpers");
+
+const sidebarSectionCases = [
+  {
+    name: "Nyheder",
+    section: "sectionNyheder",
+    links: ["nyhederPolitik", "nyhederKrimi", "nyhederSamfund"],
+  },
+  {
+    name: "Sport",
+    section: "sectionSport",
+    links: ["sportSendeplan", "sportLiveResultater", "sportTurneringer"],
+  },
+  {
+    name: "Vejr",
+    section: "sectionVejr",
+    links: ["vejrUdsigt", "vejrRadar"],
+  },
+  {
+    name: "TV",
+    section: "sectionTV",
+    links: ["tvGuide", "tvProgrammer", "tvKanaler"],
+  },
+  {
+    name: "Livsstil",
+    section: "sectionLivsstil",
+    links: ["livsstilMad", "livsstilBolig"],
+  },
+  {
+    name: "Underholdning",
+    section: "sectionUnderholdning",
+    links: [
+      "underholdningKendte",
+      "underholdningRoyale",
+      "underholdningComedy",
+    ],
+  },
+  {
+    name: "Echo",
+    section: "sectionEcho",
+    links: ["echoKorteVideoer", "echoVideo"],
+  },
+];
 
 test.describe("Sidebar", () => {
   test.beforeEach(async ({ frontPage }) => {
@@ -22,94 +65,23 @@ test.describe("Sidebar", () => {
     await expect(frontPage.sidebar.sectionHeader).toBeVisible();
   });
 
-  test.describe("Nyheder section", () => {
-    test.beforeEach(async ({ frontPage }) => {
-      await frontPage.sidebar.expandSection(frontPage.sidebar.sectionNyheder);
-    });
-
-    test("Nyheder section expands and shows sub-links", async ({
+  for (const sectionCase of sidebarSectionCases) {
+    test(`${sectionCase.name} section expands and shows sub-links`, async ({
       frontPage,
     }) => {
-      await expect(frontPage.sidebar.nyhederPolitik).toBeVisible();
-      await expect(frontPage.sidebar.nyhederKrimi).toBeVisible();
-      await expect(frontPage.sidebar.nyhederSamfund).toBeVisible();
-    });
-  });
+      const subLinks = sectionCase.links.map((linkKey) => ({
+        name: linkKey,
+        locator: frontPage.sidebar[linkKey],
+      }));
 
-  test.describe("Sport section", () => {
-    test.beforeEach(async ({ frontPage }) => {
-      await frontPage.sidebar.expandSection(frontPage.sidebar.sectionSport);
-    });
-
-    test("Sport section expands and shows sub-links", async ({ frontPage }) => {
-      await expect(frontPage.sidebar.sportSendeplan).toBeVisible();
-      await expect(frontPage.sidebar.sportLiveResultater).toBeVisible();
-      await expect(frontPage.sidebar.sportTurneringer).toBeVisible();
-    });
-  });
-
-  test.describe("Vejr section", () => {
-    test.beforeEach(async ({ frontPage }) => {
-      await frontPage.sidebar.expandSection(frontPage.sidebar.sectionVejr);
-    });
-
-    test("Vejr section expands and shows sub-links", async ({ frontPage }) => {
-      await expect(frontPage.sidebar.vejrUdsigt).toBeVisible();
-      await expect(frontPage.sidebar.vejrRadar).toBeVisible();
-    });
-  });
-
-  test.describe("TV section", () => {
-    test.beforeEach(async ({ frontPage }) => {
-      await frontPage.sidebar.expandSection(frontPage.sidebar.sectionTV);
-    });
-
-    test("TV section expands and shows sub-links", async ({ frontPage }) => {
-      await expect(frontPage.sidebar.tvGuide).toBeVisible();
-      await expect(frontPage.sidebar.tvProgrammer).toBeVisible();
-      await expect(frontPage.sidebar.tvKanaler).toBeVisible();
-    });
-  });
-
-  test.describe("Livsstil section", () => {
-    test.beforeEach(async ({ frontPage }) => {
-      await frontPage.sidebar.expandSection(frontPage.sidebar.sectionLivsstil);
-    });
-
-    test("Livsstil section expands and shows sub-links", async ({
-      frontPage,
-    }) => {
-      await expect(frontPage.sidebar.livsstilMad).toBeVisible();
-      await expect(frontPage.sidebar.livsstilBolig).toBeVisible();
-    });
-  });
-
-  test.describe("Underholdning section", () => {
-    test.beforeEach(async ({ frontPage }) => {
-      await frontPage.sidebar.expandSection(
-        frontPage.sidebar.sectionUnderholdning,
+      await verifyExpandedSidebarSection(
+        frontPage.sidebar,
+        frontPage.sidebar[sectionCase.section],
+        subLinks,
+        sectionCase.name,
       );
     });
-
-    test("Underholdning section expands and shows sub-links", async ({
-      frontPage,
-    }) => {
-      await expect(frontPage.sidebar.underholdningKendte).toBeVisible();
-      await expect(frontPage.sidebar.underholdningRoyale).toBeVisible();
-      await expect(frontPage.sidebar.underholdningComedy).toBeVisible();
-    });
-  });
-
-  test.describe("Echo section", () => {
-    test.beforeEach(async ({ frontPage }) => {
-      await frontPage.sidebar.expandSection(frontPage.sidebar.sectionEcho);
-    });
-
-    test("Echo section expands and shows sub-links", async ({ frontPage }) => {
-      await expect(frontPage.sidebar.echoKorteVideoer).toBeVisible();
-      await expect(frontPage.sidebar.echoVideo).toBeVisible();
-    });
-  });
+  }
 
   test.describe("Shortcuts", () => {
     test("Shortcuts header is visible", async ({ frontPage }) => {

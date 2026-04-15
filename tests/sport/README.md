@@ -5,7 +5,9 @@ This folder contains stable test specs for the Sport section pages:
 - `sport.spec.js`
 - `schedule.spec.js`
 - `live-scores.spec.js`
-- `tournaments.spec.js`
+- `matchPage.spec.js`
+- `tournamentPage.spec.js`
+- `tournamentsList.spec.js`
 
 ## Sport Debug Spec
 
@@ -13,7 +15,7 @@ The dedicated debug spec for Sport is:
 
 - `utils/debug/sport-debug.spec.js`
 
-Run it with:
+### Run Command
 
 ```bash
 npx playwright test utils/debug/sport-debug.spec.js --project=chromium --workers=1
@@ -38,7 +40,9 @@ npx playwright test utils/debug/sport-debug.spec.js --project=chromium --workers
 npx playwright test tests/sport/sport.spec.js
 npx playwright test tests/sport/schedule.spec.js
 npx playwright test tests/sport/live-scores.spec.js
-npx playwright test tests/sport/tournaments.spec.js
+npx playwright test tests/sport/matchPage.spec.js
+npx playwright test tests/sport/tournamentPage.spec.js
+npx playwright test tests/sport/tournamentsList.spec.js
 ```
 
 ## Notes

@@ -14,10 +14,10 @@ Helps you find and validate CSS selectors, role-based locators, and explore DOM 
 - You need to inspect element structure and class names
 - You're trying to find parent/container elements
 
-**Run:**
+### Run Command
 
 ```bash
-npm test -- utils/debug/selector-inspector.spec.js
+npx playwright test utils/debug/selector-inspector.spec.js
 ```
 
 **What it tests:**
@@ -38,10 +38,10 @@ Inspects and compares element attributes across multiple elements and navigation
 - You need to see all attributes on an element
 - You're debugging state changes during navigation
 
-**Run:**
+### Run Command
 
 ```bash
-npm test -- utils/debug/attribute-inspector.spec.js
+npx playwright test utils/debug/attribute-inspector.spec.js
 ```
 
 **What it tests:**
@@ -63,10 +63,10 @@ Traces navigation flow and analyzes timing issues.
 - You need to understand navigation timing
 - Selectors aren't matching as expected
 
-**Run:**
+### Run Command
 
 ```bash
-npm test -- utils/debug/navigation-debugger.spec.js
+npx playwright test utils/debug/navigation-debugger.spec.js
 ```
 
 **What it tests:**
@@ -87,7 +87,7 @@ Dedicated debug spec for Sport section structure analysis.
 - You need to inspect Sports tabs, schedule cards, live score filters, or tournament links
 - You need robust selectors without crawler-based inspection
 
-**Run:**
+### Run Command
 
 ```bash
 npx playwright test utils/debug/sport-debug.spec.js --project=chromium --workers=1
@@ -109,7 +109,7 @@ Analyses the DOM structure of football and handball tournament detail pages to h
 - You need to discover CSS class names for team sliders, match poster groups, highlights decks, standings, or branding decks
 - You need to compare structural complexity between football and handball tournament pages
 
-**Run:**
+### Run Command
 
 ```bash
 npx playwright test utils/debug/tournament-page-debug.spec.js --project=chromium --workers=1
@@ -135,7 +135,7 @@ npx playwright test utils/debug/tournament-page-debug.spec.js --project=chromium
 2. **Look at console output**: Most of these specs log detailed debug information. Run with:
 
    ```bash
-   npm test -- utils/debug/selector-inspector.spec.js --reporter=list
+   npx playwright test utils/debug/selector-inspector.spec.js --reporter=list
    ```
 
 3. **Run one spec at a time**: It's easier to read the output when not running all tests in parallel.

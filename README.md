@@ -4,7 +4,7 @@ This project contains an automated test suite built with Playwright, a Node.js l
 
 ## Prerequisites
 
-- Node.js (version 14 or higher)
+- Node.js (version 18 or higher)
 - npm (comes with Node.js)
 
 ## Setup
@@ -33,7 +33,7 @@ npx playwright test
 ### Run Tests in a Specific File
 
 ```bash
-npx playwright test tests/example.spec.js
+npx playwright test tests/frontpage/content.spec.js
 ```
 
 ### Run Tests in Headed Mode (with browser UI visible)
@@ -48,19 +48,53 @@ npx playwright test --headed
 npx playwright test --project=chromium
 npx playwright test --project=firefox
 npx playwright test --project=webkit
-```
 
-### Generate and View Test Report
 
 After running tests, generate and view the HTML report:
+
+npx playwright show-report
+
+```
+
+npm install
+
+````
+
+## Running Tests
+
+### All Tests
+
+```bash
+npx playwright test
+````
+
+### One File
+
+```bash
+npx playwright test tests/frontpage/content.spec.js
+```
+
+### Headed Mode
+
+```bash
+npx playwright test --headed
+```
+
+### One Browser Project
+
+```bash
+npx playwright test --project=chromium
+npx playwright test --project=firefox
+npx playwright test --project=webkit
+```
+
+### HTML Report
 
 ```bash
 npx playwright show-report
 ```
 
-### Debug Tests
-
-Run tests in debug mode:
+### Debug Mode
 
 ```bash
 npx playwright test --debug
@@ -68,10 +102,10 @@ npx playwright test --debug
 
 ## Configuration
 
-The test configuration is defined in `playwright.config.js`. This file includes:
+The configuration is defined in `playwright.config.js` and includes:
 
 - Test directory location (`./tests`)
-- Browser configurations (Chromium, Firefox, WebKit)
+- Browser projects (Chromium, Firefox, WebKit)
 - Parallel execution settings
 - Retry policies
 - Reporting options
@@ -79,26 +113,28 @@ The test configuration is defined in `playwright.config.js`. This file includes:
 ## Project Structure
 
 - `tests/` - Test specification files (`.spec.js`)
-- `pages/` - Page Object Model classes and page components
-- `pages/components/` - Reusable UI elements (Navbar, Modals, etc.) used across pages
-- `utils/` - Pure helper functions independent of Playwright (date formatting, API wrappers, auth tokens)
-- `data/` - Test data files (JSON/CSV): environment URLs, credentials, static test strings
-- `fixtures/` - Playwright test fixtures with setup logic (page object injection, cookie handling)
+- `pages/` - Page Object Model classes for front page, news, sport, and weather flows
+- `pages/components/` - Reusable UI components (Navigation, Sidebar, Footer, LoginMenu, Content)
+- `utils/` - Shared Playwright-aware helpers (assertion helpers, navigation retry helpers, debug specs)
+- `data/` - Optional structured test data files
+- `fixtures/` - Extended Playwright fixtures and storage state
 - `playwright.config.js` - Playwright configuration
 - `package.json` - Project dependencies and scripts
 
 ## Writing Tests
 
-Tests are written using Playwright's test runner. Example:
+Example with the base Playwright runner:
 
 ```javascript
-import { test, expect } from "@playwright/test";
+const { test, expect } = require("@playwright/test");
 
 test("example test", async ({ page }) => {
   await page.goto("https://example.com");
   await expect(page).toHaveTitle(/Example/);
 });
 ```
+
+In this repository, most specs import from `fixtures/index.js` so they can use pre-configured page objects (`frontPage`, `nyhederPage`, `sportPage`, `weatherPage`).
 
 ## Additional Resources
 

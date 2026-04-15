@@ -1,3 +1,5 @@
+const { gotoWithRetry } = require("../utils/page-navigation");
+
 class MatchPage {
   constructor(page, url = "") {
     this.page = page;
@@ -116,10 +118,7 @@ class MatchPage {
    * @param {string} [url] - Override the URL set in the constructor.
    */
   async navigate(url) {
-    await this.page.goto(url || this.url, {
-      waitUntil: "domcontentloaded",
-      timeout: 45000,
-    });
+    await gotoWithRetry(this.page, url || this.url);
     if (url) this.url = url;
   }
 

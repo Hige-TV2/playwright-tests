@@ -2,6 +2,7 @@ const { Navigation } = require("./components/Navigation");
 const { Sidebar } = require("./components/Sidebar");
 const { Footer } = require("./components/Footer");
 const { LoginMenu } = require("./components/LoginMenu");
+const { gotoWithRetry } = require("../utils/page-navigation");
 
 class SportPage {
   constructor(page) {
@@ -59,10 +60,7 @@ class SportPage {
   }
 
   async navigate(path = "") {
-    await this.page.goto(`${this.url}${path}`, {
-      waitUntil: "domcontentloaded",
-      timeout: 45000,
-    });
+    await gotoWithRetry(this.page, `${this.url}${path}`);
   }
 }
 
