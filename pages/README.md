@@ -10,6 +10,6 @@ Each file should define locators and common actions for a specific URL or view.
 - `sportPage.js` - Main sport page (sport.tv2.dk)
 - `schedulePage.js` - Sport TV schedule (sport.tv2.dk/sendeplan)
 - `liveScoresPage.js` - Live scores and results (sport.tv2.dk/livescore-og-resultater)
-- `tournamentsPage.js` - Tournament listings (sport.tv2.dk/turneringer)
+- `tournamentsList.js` - Tournament listings (sport.tv2.dk/turneringer)
 
 **Pattern:** - `PageName.js`

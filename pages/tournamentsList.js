@@ -1,4 +1,4 @@
-class TournamentsPage {
+class TournamentsList {
   constructor(page) {
     this.page = page;
     this.url = "https://sport.tv2.dk/turneringer";
@@ -71,4 +71,4 @@ class TournamentsPage {
   }
 }
 
-module.exports = { TournamentsPage };
+module.exports = { TournamentsList };

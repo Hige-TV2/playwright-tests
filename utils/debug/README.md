@@ -77,7 +77,7 @@ npm test -- utils/debug/navigation-debugger.spec.js
 
 ---
 
-### 4. `tests/sport-debug.spec.js`
+### 4. `sport-debug.spec.js`
 
 Dedicated debug spec for Sport section structure analysis.
 
@@ -90,12 +90,41 @@ Dedicated debug spec for Sport section structure analysis.
 **Run:**
 
 ```bash
-npx playwright test tests/sport-debug.spec.js --project=chromium --workers=1
+npx playwright test utils/debug/sport-debug.spec.js --project=chromium --workers=1
 ```
 
 **Related guide:**
 
 - `tests/sport/README.md` (repeatable selector discovery workflow)
+
+---
+
+### 5. `tournament-page-debug.spec.js`
+
+Analyses the DOM structure of football and handball tournament detail pages to help build or refine selectors for `TournamentPage` tests.
+
+**Use when:**
+
+- Building or updating tests for tournament pages (`/fodbold/superliga`, `/haandbold/bundesligaen`, etc.)
+- You need to discover CSS class names for team sliders, match poster groups, highlights decks, standings, or branding decks
+- You need to compare structural complexity between football and handball tournament pages
+
+**Run:**
+
+```bash
+npx playwright test utils/debug/tournament-page-debug.spec.js --project=chromium --workers=1
+```
+
+**What it tests:**
+
+- Detects and reports key sections: team navigation slider, match poster groups, highlights deck headers, standings deck, branding deck
+- Logs class names, text content, and element counts for the first few matches of each selector
+- Compares structural metrics (section count, article count, link count, deck types) side-by-side for football vs. handball pages
+
+**Pages analysed:**
+
+- `https://sport.tv2.dk/fodbold/superliga` — football tournament (rich page)
+- `https://sport.tv2.dk/haandbold/bundesligaen` — handball tournament (simpler page)
 
 ---
 
