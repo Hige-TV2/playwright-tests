@@ -14,6 +14,7 @@ Each file should define locators and common actions for a specific URL or view.
 - `tournamentPage.js` - Tournament detail pages (sport.tv2.dk/.../turnering/...)
 - `tournamentsList.js` - Tournament listings (sport.tv2.dk/turneringer)
 - `weatherPage.js` - Weather pages (vejr.tv2.dk)
+- `tvPage.js` - TV landing page modules (tv.tv2.dk)
 
 ## Naming Pattern
 

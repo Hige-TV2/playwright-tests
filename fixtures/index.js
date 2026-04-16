@@ -3,6 +3,7 @@ const { FrontPage } = require("../pages/frontPage");
 const { NyhederPage } = require("../pages/nyhederPage");
 const { SportPage } = require("../pages/sportPage");
 const { WeatherPage } = require("../pages/weatherPage");
+const { TvPage } = require("../pages/tvPage");
 const { dismissCookieBanner } = require("../utils/test-helpers");
 const { expect } = require("@playwright/test");
 
@@ -47,6 +48,13 @@ const test = base.extend({
     await weatherPage.navigate();
     await dismissCookieBanner(page);
     await use(weatherPage);
+  },
+
+  tvPage: async ({ page }, use) => {
+    const tvPage = new TvPage(page);
+    await tvPage.navigate();
+    await dismissCookieBanner(page);
+    await use(tvPage);
   },
 });
 

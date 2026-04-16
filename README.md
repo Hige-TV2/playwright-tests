@@ -113,6 +113,7 @@ The configuration is defined in `playwright.config.js` and includes:
 ## Project Structure
 
 - `tests/` - Test specification files (`.spec.js`)
+- `tests/tv/` - TV section coverage for tv.tv2.dk (content, guide/channels, Play)
 - `pages/` - Page Object Model classes for front page, news, sport, and weather flows
 - `pages/components/` - Reusable UI components (Navigation, Sidebar, Footer, LoginMenu, Content)
 - `utils/` - Shared Playwright-aware helpers (assertion helpers, navigation retry helpers, debug specs)
@@ -134,7 +135,7 @@ test("example test", async ({ page }) => {
 });
 ```
 
-In this repository, most specs import from `fixtures/index.js` so they can use pre-configured page objects (`frontPage`, `nyhederPage`, `sportPage`, `weatherPage`).
+In this repository, most specs import from `fixtures/index.js` so they can use pre-configured page objects (`frontPage`, `nyhederPage`, `sportPage`, `weatherPage`, `tvPage`).
 
 ## Additional Resources
 
