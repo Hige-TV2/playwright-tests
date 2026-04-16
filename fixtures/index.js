@@ -23,7 +23,21 @@ const test = base.extend({
 
   sportPage: async ({ page }, use) => {
     const sportPage = new SportPage(page);
-    await sportPage.navigate();
+    // Retry navigation on transient failures
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        await sportPage.navigate();
+        break;
+      } catch (error) {
+        const msg = String(error?.message || "").toLowerCase();
+        if (
+          attempt === 2 ||
+          (!msg.includes("timeout") && !msg.includes("chrome-error"))
+        ) {
+          throw error;
+        }
+      }
+    }
     await dismissCookieBanner(page);
     await use(sportPage);
   },

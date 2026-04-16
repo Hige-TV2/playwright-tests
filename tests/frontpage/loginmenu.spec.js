@@ -47,13 +47,13 @@ test.describe("Login Menu", () => {
       expect(options.length).toBeGreaterThan(0);
     });
 
-    test("Region options are disabled for logged-out users", async ({
-      frontPage,
-    }) => {
+    test("Selecting a region updates the selector", async ({ frontPage }) => {
+      const initialRegion = await frontPage.loginMenu.getSelectedRegion();
       await frontPage.loginMenu.openRegionDropdown();
-      await expect(
-        frontPage.page.locator('input[id="region-TV2FYN"]'),
-      ).toBeDisabled();
+      await frontPage.loginMenu.selectRegion("TV2FYN");
+      const updated = await frontPage.loginMenu.getSelectedRegion();
+      expect(updated).not.toBe(initialRegion);
+      expect(updated).toContain("TV 2 Fyn");
     });
   });
 

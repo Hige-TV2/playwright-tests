@@ -1,7 +1,9 @@
 class Sidebar {
   constructor(page) {
     this.closeButton = page.getByRole("button", { name: "Luk menu" });
-    this.searchBox = page.getByRole("searchbox", { name: "Søg på tv2.dk" });
+    this.searchBox = page
+      .getByRole("search", { name: /Søg på tv2\.dk/i })
+      .getByRole("searchbox", { name: /Indtast søgeord|Søg på tv2\.dk/i });
 
     // Section headers
     this.sectionHeader = page.getByRole("heading", { name: "Sektioner" });

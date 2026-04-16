@@ -6,6 +6,7 @@ const {
   verifyLinkHrefs,
   verifyVisibleItems,
 } = require("../../utils/test-helpers");
+const { gotoWithRetry } = require("../../utils/page-navigation");
 
 // ============================================================
 // Finished match — Atletico Madrid 1-2 Barcelona (La Liga)
@@ -109,6 +110,7 @@ test.describe("Football match page — upcoming match", () => {
   let matchPage;
 
   test.beforeAll(async ({ browser }) => {
+    test.setTimeout(75000);
     const context = await browser.newContext();
     const page = await context.newPage();
     try {
@@ -117,9 +119,13 @@ test.describe("Football match page — upcoming match", () => {
       tomorrow.setDate(tomorrow.getDate() + 1);
       const dateStr = tomorrow.toISOString().slice(0, 10);
 
-      await page.goto(
+      await gotoWithRetry(
+        page,
         `https://sport.tv2.dk/livescore-og-resultater/${dateStr}`,
-        { waitUntil: "domcontentloaded", timeout: 45000 },
+        {
+          waitUntil: "domcontentloaded",
+          timeout: 45000,
+        },
       );
       await page
         .waitForLoadState("networkidle", { timeout: 15000 })
@@ -214,13 +220,18 @@ test.describe("Football match page — live match", () => {
   let matchPage;
 
   test.beforeAll(async ({ browser }) => {
+    test.setTimeout(75000);
     const context = await browser.newContext();
     const page = await context.newPage();
     try {
-      await page.goto("https://sport.tv2.dk/livescore-og-resultater", {
-        waitUntil: "domcontentloaded",
-        timeout: 45000,
-      });
+      await gotoWithRetry(
+        page,
+        "https://sport.tv2.dk/livescore-og-resultater",
+        {
+          waitUntil: "domcontentloaded",
+          timeout: 45000,
+        },
+      );
       await page
         .waitForLoadState("networkidle", { timeout: 15000 })
         .catch(() => {});

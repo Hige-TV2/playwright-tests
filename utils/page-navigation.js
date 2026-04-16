@@ -3,12 +3,15 @@
  */
 
 function isRetryableNavigationError(error) {
-  const message = String(error?.message || "");
+  const message = String(error?.message || "").toLowerCase();
   return (
-    message.includes("ERR_CONNECTION_TIMED_OUT") ||
-    message.includes("ERR_ABORTED") ||
-    message.includes("Test timeout") ||
-    message.includes("Timeout")
+    message.includes("err_connection_timed_out") ||
+    message.includes("err_timed_out") ||
+    message.includes("err_aborted") ||
+    message.includes("chrome-error") ||
+    message.includes("interrupted") ||
+    message.includes("test timeout") ||
+    message.includes("timeout")
   );
 }
 
@@ -23,7 +26,7 @@ async function gotoWithOptions(
 async function gotoWithRetry(
   page,
   url,
-  { maxAttempts = 2, waitUntil = "domcontentloaded", timeout = 45000 } = {},
+  { maxAttempts = 3, waitUntil = "domcontentloaded", timeout = 45000 } = {},
 ) {
   let lastError;
 

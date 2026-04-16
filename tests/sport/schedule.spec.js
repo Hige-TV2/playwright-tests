@@ -35,20 +35,25 @@ test.describe("Sport schedule page", () => {
   });
 
   test("Events have required elements", async () => {
-    const eventCount = await schedulePage.events.count();
-    let foundEventWithTime = false;
-
-    for (let i = 0; i < Math.min(eventCount, 5); i++) {
-      const eventText = await schedulePage.events.nth(i).textContent();
-      expect(eventText?.length).toBeGreaterThan(10);
-
-      const hasTime = /(kl\.?\s*)?\d{1,2}[.:]\d{2}/.test(eventText || "");
-      if (hasTime) {
-        foundEventWithTime = true;
-      }
-    }
-
-    expect(foundEventWithTime).toBe(true);
+    // Poll for events with usable content before checking details
+    await expect
+      .poll(
+        async () => {
+          const count = await schedulePage.events.count();
+          if (count === 0) return false;
+          let hasEventWithTime = false;
+          for (let i = 0; i < Math.min(count, 5); i++) {
+            const text = await schedulePage.events.nth(i).textContent();
+            if (/(kl\.?\s*)?\d{1,2}[.:]\d{2}/.test(text || "")) {
+              hasEventWithTime = true;
+              break;
+            }
+          }
+          return hasEventWithTime;
+        },
+        { timeout: 15000 },
+      )
+      .toBeTruthy();
 
     console.log("✓ Found events with time and content");
   });
@@ -68,6 +73,18 @@ test.describe("Sport schedule page", () => {
   });
 
   test("Can inspect events by sport type", async () => {
+    // Poll to ensure sport filters work with populated content
+    await expect
+      .poll(
+        async () => {
+          const footballEvents = schedulePage.getEventsBySport("Fodbold");
+          const footballCount = await footballEvents.count();
+          return footballCount > 0;
+        },
+        { timeout: 15000 },
+      )
+      .toBeTruthy();
+
     const footballEvents = schedulePage.getEventsBySport("Fodbold");
     const footballCount = await footballEvents.count();
 
