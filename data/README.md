@@ -1,8 +1,16 @@
 # Test Data
 
-JSON or CSV files containing environment URLs, user credentials, and static test strings.
-Avoid hardcoding strings in the `.spec` files; pull them from here instead.
+This folder is reserved for structured test data as the suite grows.
+Use it for JSON/CSV fixtures, endpoint variants, locale strings, and other reusable inputs to avoid hardcoded values in specs.
 
-## Naming Pattern
+## Suggested naming
 
-- `test-data.json`
+- `*.data.json` for scenario datasets
+- `*.users.json` for user profiles/roles
+- `*.matrix.json` for combinational test cases
+
+## Guidance
+
+- Keep data deterministic and environment-safe.
+- Do not store secrets or credentials.
+- Prefer small, composable files over one large file.

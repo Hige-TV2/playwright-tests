@@ -6,4 +6,3 @@ Fixtures provide pre-configured page objects and handle common test initializati
 ## Files
 
 - `index.js` - Main fixtures file exporting the extended test runner
-- `storageState.json` - Saved session state for authenticated tests (cookies, localStorage, etc.)

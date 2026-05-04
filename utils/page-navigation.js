@@ -46,6 +46,5 @@ async function gotoWithRetry(
 }
 
 module.exports = {
-  gotoWithOptions,
   gotoWithRetry,
 };

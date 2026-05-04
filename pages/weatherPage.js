@@ -24,9 +24,9 @@ class WeatherPage {
       "article, [data-testid*='forecast'], [class*='forecast'], [class*='Forecast']",
     );
 
-    // Generic city search fallbacks to support UI variations.
+    // City search input has no aria-label; match by placeholder instead.
     this.citySearchInput = this.main
-      .getByRole("searchbox", { name: /Søg efter by eller sted/i })
+      .getByPlaceholder(/Søg efter by eller sted/i)
       .first();
 
     this.citySuggestionItems = page.locator(

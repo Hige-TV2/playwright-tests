@@ -117,8 +117,8 @@ The configuration is defined in `playwright.config.js` and includes:
 - `pages/` - Page Object Model classes for front page, news, sport, and weather flows
 - `pages/components/` - Reusable UI components (Navigation, Sidebar, Footer, LoginMenu, Content)
 - `utils/` - Shared Playwright-aware helpers (assertion helpers, navigation retry helpers, debug specs)
-- `data/` - Optional structured test data files
-- `fixtures/` - Extended Playwright fixtures and storage state
+- `data/` - Reserved folder for structured test data files as the suite grows
+- `fixtures/` - Extended Playwright fixtures
 - `playwright.config.js` - Playwright configuration
 - `package.json` - Project dependencies and scripts
 

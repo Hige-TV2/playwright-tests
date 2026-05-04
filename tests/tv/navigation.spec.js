@@ -129,8 +129,9 @@ test.describe("TV outbound navigation", () => {
       {
         name: "Kanaler link",
         locator: tvPage.channelsLink,
+        // omtv2.tv2.dk/kanaler was migrated to tv2danmark.dk
         expectedUrl:
-          /https?:\/\/omtv2\.tv2\.dk\/(tv-2s-medier|medier)\/kanaler\/?/i,
+          /https?:\/\/(omtv2\.tv2\.dk\/(tv-2s-medier|medier)\/kanaler|tv2danmark\.dk)/i,
       },
       {
         name: "TV 2 Play top navigation link",

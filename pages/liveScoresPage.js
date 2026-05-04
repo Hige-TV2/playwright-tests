@@ -8,17 +8,20 @@ class LiveScoresPage {
     // Main content
     this.main = page.locator("main");
     this.mainContent = page.locator("#main");
+    this.sportFilterGroup = this.mainContent
+      .getByRole("heading", { name: "Sportsgrene" })
+      .locator("..");
 
     // Sport category links
-    this.fodboldLink = this.mainContent.getByRole("link", {
+    this.fodboldLink = this.sportFilterGroup.getByRole("link", {
       name: "Fodbold",
       exact: true,
     });
-    this.handboldLink = this.mainContent.getByRole("link", {
+    this.handboldLink = this.sportFilterGroup.getByRole("link", {
       name: "Håndbold",
       exact: true,
     });
-    this.cyklingLink = this.mainContent.getByRole("link", {
+    this.cyklingLink = this.sportFilterGroup.getByRole("link", {
       name: "Cykling",
       exact: true,
     });
