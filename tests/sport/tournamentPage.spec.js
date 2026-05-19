@@ -73,6 +73,7 @@ test.describe("Football tournament page - Superliga", () => {
   });
 
   test("Standings table is present and populated", async () => {
+    await tournamentPage.navigateToStandings();
     await expect(tournamentPage.standingsDeck).toBeVisible();
     const rowCount = await tournamentPage.standingsRows.count();
     expect(rowCount).toBeGreaterThan(0);

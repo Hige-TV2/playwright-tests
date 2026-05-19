@@ -61,21 +61,17 @@ test.describe("Sport live scores page", () => {
   });
 
   test("Can navigate to different dates", async ({ page }) => {
-    // Get current URL
     const currentUrl = page.url();
-
-    // Click on a different date (not today)
     const dateLinks = liveScoresPage.dateLinks;
     const dateCount = await dateLinks.count();
 
     if (dateCount > 1) {
-      // Find a date that's not the current one
-      for (let i = 0; i < dateCount; i++) {
+      // Start from index 1 to avoid the prev-arrow button overlapping the first date
+      for (let i = 1; i < dateCount; i++) {
         const dateLink = dateLinks.nth(i);
         const href = await dateLink.getAttribute("href");
 
         if (!currentUrl.includes(href?.split("/").pop() || "")) {
-          await dismissCookieBanner(page);
           await dateLink.click();
           await expect(page).toHaveURL(href || "");
           console.log(`✓ Navigated to different date: ${href}`);

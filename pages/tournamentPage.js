@@ -17,16 +17,13 @@ class TournamentPage {
     this.mainContent = page.locator("#main");
 
     // ----------------------------------------------------------------
-    // Common — present on both football and handball tournament pages
-    // ----------------------------------------------------------------
-
-    // Standings are represented by the primary tournament table on both pages.
-    this.standingsDeck = this.main.locator("table").first();
-    this.standingsRows = this.standingsDeck.locator("tbody tr, tr");
-
-    // ----------------------------------------------------------------
     // Football-only sections
     // ----------------------------------------------------------------
+
+    // Standings live on the /stilling sub-page, not the root tournament page.
+    this.standingsUrl = this.type === "football" ? `${url}/stilling` : url;
+    this.standingsDeck = this.main.locator("table").first();
+    this.standingsRows = this.standingsDeck.locator("tbody tr");
 
     // Branding deck at the top with TV 2 Play button.
     this.brandingDeck = this.main
@@ -100,6 +97,16 @@ class TournamentPage {
 
   async navigate() {
     await gotoWithRetry(this.page, this.url);
+  }
+
+  /**
+   * Navigate to the standings sub-page and wait for the table to be ready.
+   * For football this is /stilling; for handball it is the root URL.
+   */
+  async navigateToStandings() {
+    await gotoWithRetry(this.page, this.standingsUrl);
+    await this.main.waitFor({ state: "visible", timeout: 20000 });
+    await this.standingsDeck.waitFor({ state: "visible", timeout: 20000 });
   }
 
   /**
